@@ -3,7 +3,7 @@
 import rospy
 from geometry_msgs.msg import PoseStamped
 from styx_msgs.msg import Lane, Waypoint
-from scipy.spatial import KDTree
+from scipy.spatial import KDTree    
 import math
 
 '''
@@ -33,7 +33,7 @@ class WaypointUpdater(object):
 
         # TODO: Add other member variables you need below
         self.pose = None
-        self.base_lane = None
+        self.base_waypoints = None
         self.waypoints_2d = None
         self.waypoints_tree = None
 
@@ -73,8 +73,8 @@ class WaypointUpdater(object):
         lane = Lane()
         lane.header = self.base_waypoints.header
         lane.waypoints = self.base_waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
-        self.final_waypoints_pub.publish(lane)
-
+        self.final_waypoints_pub.publish(lane)    
+            
     def pose_cb(self, msg):
         # TODO: Implement
         self.pose = msg
