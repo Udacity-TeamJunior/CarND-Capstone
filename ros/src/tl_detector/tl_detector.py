@@ -11,7 +11,6 @@ from light_classification.tl_classifier import TLClassifier
 import tf
 import cv2
 import yaml
-import numpy as np
 
 STATE_COUNT_THRESHOLD = 3
 
@@ -106,21 +105,8 @@ class TLDetector(object):
             int: index of the closest waypoint in self.waypoints
 
         """
-        closest_idx = self.waypoints_tree.query([x ,y], 1)[1]
-
-        # Check if the closest point is ahead or behind vehicle
-        closest_coord = self.waypoints_2d[closest_idx]
-        prev_coord = self.waypoints_2d[closest_idx -1]
-
-        # Equation for hyperplane through closest coords
-        cl_vect = np.array(closest_coord)
-        prev_vect = np.array(prev_coord)
-        pose_vect = np.array([x , y])
-
-        val = np.dot(cl_vect - prev_vect, pose_vect - cl_vect)
-
-        if val > 0:
-            closest_idx = (closest_idx + 1) % len(self.waypoints_2d)
+        #TODO implement
+        closest_idx = self.waypoints_tree.query([x,y], 1)[1]
         return closest_idx
 
     def get_light_state(self, light):
