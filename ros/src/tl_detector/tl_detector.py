@@ -107,7 +107,7 @@ class TLDetector(object):
 
         """
         #TODO implement
-       closest_idx = self.waypoints_tree.query([x,y], 1)[1]
+        closest_idx = self.waypoints_tree.query([x,y], 1)[1]
 
         # Check if the closest point is ahead or behind vehicle
         closest_coord = self.waypoints_2d[closest_idx]
