@@ -12,9 +12,9 @@ class Controller(object):
         # TODO: Implement
         self.yaw_controller = YawController(wheel_base, steer_ratio, 0.1, max_lat_accel, max_steer_angle)
 
-        kp = 1
-        ki = 0.5
-        kd = 0.03
+        kp = 1.2
+        ki = 0.05
+        kd = 0.0
         mn = 0.0 # Min throttle value
         mx = 0.2 # Max throttle value
 
