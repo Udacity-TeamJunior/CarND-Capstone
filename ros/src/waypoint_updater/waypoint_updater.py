@@ -39,9 +39,10 @@ class WaypointUpdater(object):
         self.waypoints_2d = None
         self.waypoints_tree = None
         self.stopline_wp_idx = -1
+        self.current_vel = None
         #rospy.spin()
         self.loop()
-        self.current_vel = None
+        
 
     def loop(self):
         rate = rospy.Rate(50)
