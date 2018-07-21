@@ -47,6 +47,7 @@ RUN apt-get install -y unzip
 RUN sh -c 'cd /tmp/; curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip; unzip protoc-3.2.0-linux-x86_64.zip -d protoc3; mv protoc3/bin/* /usr/local/bin/; mv protoc3/include/* /usr/local/include/'
 RUN sh -c 'cd /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/; protoc object_detection/protos/*.proto --python_out=.'
 
+RUN sh -c 'echo "export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/slim" >> ~/.bashrc'
 
 RUN mkdir /capstone
 VOLUME ["/capstone"]
