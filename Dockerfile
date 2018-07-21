@@ -28,6 +28,17 @@ RUN apt-get install -y ros-$ROS_DISTRO-image-proc
 # socket io
 RUN apt-get install -y netbase
 
+RUN apt-get install -y protobuf-compiler 
+RUN apt-get install -y python-pil 
+RUN apt-get install -y python-lxml 
+RUN apt-get install -y python-tk
+
+RUN pip install --user Cython
+RUN pip install --user contextlib2
+RUN pip install --user jupyter
+RUN pip install --user matplotlib
+
+
 RUN mkdir /capstone
 VOLUME ["/capstone"]
 VOLUME ["/root/.ros/log/"]
