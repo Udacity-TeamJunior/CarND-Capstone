@@ -37,6 +37,8 @@ RUN pip install --user Cython
 RUN pip install --user contextlib2
 RUN pip install --user jupyter
 RUN pip install --user matplotlib
+RUN pip install -U numpy
+
 
 RUN git clone https://github.com/tensorflow/models.git /usr/local/lib/python2.7/dist-packages/tensorflow/models
 RUN git clone https://github.com/cocodataset/cocoapi.git /usr/local/lib/python2.7/dist-packages/tensorflow/cocoapi
@@ -48,6 +50,11 @@ RUN sh -c 'cd /tmp/; curl -OL https://github.com/google/protobuf/releases/downlo
 RUN sh -c 'cd /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/; protoc object_detection/protos/*.proto --python_out=.'
 
 RUN sh -c 'echo "export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/slim" >> ~/.bashrc'
+
+RUN pip uninstall Pillow
+RUN apt-get install libjpeg-dev
+RUN apt-get install libjpeg8-dev
+RUN pip install Pillow
 
 RUN mkdir /capstone
 VOLUME ["/capstone"]
