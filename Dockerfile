@@ -51,7 +51,7 @@ RUN sh -c 'cd /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/
 
 RUN sh -c 'echo "export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/slim" >> ~/.bashrc'
 
-RUN pip uninstall Pillow
+RUN pip uninstall -y  Pillow
 RUN apt-get install libjpeg-dev
 RUN apt-get install libjpeg8-dev
 RUN pip install Pillow
