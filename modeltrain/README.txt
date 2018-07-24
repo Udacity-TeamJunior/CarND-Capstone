@@ -107,3 +107,4 @@ Run the code inside the ipython notebook. It will produce the predicted result.
 
 Notes:
 The raw data and trained models are too large, it was put into aws s3 folder. To get those data, run get_data.sh
+The tensorflow models repo changes very frequent, here is the copy of the cod we use for this test. https://s3-us-west-2.amazonaws.com/udacitysdccapstonepublic/models.zip
