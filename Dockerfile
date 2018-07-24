@@ -56,6 +56,8 @@ RUN apt-get install libjpeg-dev
 RUN apt-get install libjpeg8-dev
 RUN pip install Pillow
 
+RUN apt-get install -y wget
+
 RUN mkdir /capstone
 VOLUME ["/capstone"]
 VOLUME ["/root/.ros/log/"]
