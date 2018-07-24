@@ -91,4 +91,9 @@ root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/resea
 root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# python object_detection/export_inference_graph.py     --input_type image_tensor     --pipeline_config_path /data--rm/capstone/code/tl_train/TL_Train_Junior/data/config/faster_rcnn_resnet101_udacitycapstonejunior.config     --trained_checkpoint_prefix /data--rm/capstone/code/tl_train/TL_Train_Junior/modeloutput/model.ckpt-${CHECKPOINT_NUMBER}     --output_directory /data--rm/capstone/code/tl_train/TL_Train_Junior/modeloutput/exported_graphs
 
 
-TODO: add jupyter test here
+Copy object_detection_tutorial_udacityjunior.ipynb to /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection/
+
+Open Jupyter
+root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection# /usr/bin/env python /root/.local/bin/jupyter-notebook --allow-root --ip 0.0.0.0 --no-browser ./object_detection_tutorial.ipynb
+
+Run the code inside the ipython notebook. It will produce the predicted result.
