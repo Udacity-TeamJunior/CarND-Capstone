@@ -40,7 +40,10 @@ RUN pip install --user matplotlib
 RUN pip install -U numpy
 
 
-RUN git clone https://github.com/tensorflow/models.git /usr/local/lib/python2.7/dist-packages/tensorflow/models
+RUN git clone https://github.com/tensorflow/models.git  /usr/local/lib/python2.7/dist-packages/tensorflow/models
+RUN sh -c 'cd /usr/local/lib/python2.7/dist-packages/tensorflow/models; git reset --hard ae8e0f539ab97b070b8673b16ec08494980fa254'
+
+
 RUN git clone https://github.com/cocodataset/cocoapi.git /usr/local/lib/python2.7/dist-packages/tensorflow/cocoapi
 RUN sh -c 'cd /usr/local/lib/python2.7/dist-packages/tensorflow/cocoapi/PythonAPI && make && cp -r /usr/local/lib/python2.7/dist-packages/tensorflow/cocoapi/PythonAPI/pycocotools /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/'
 
