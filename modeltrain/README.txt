@@ -1,7 +1,7 @@
 Steps:
 
 Get Data
-Get data from https://drive.google.com/file/d/0B-Eiyn-CUQtxdUZWMkFfQzdObUE/view?usp=sharing
+Get data from https://s3-us-west-2.amazonaws.com/udacitysdccapstonepublic/dataset-sdcnd-capstone.zip
 The .record files already created in AWS GPU instance by following "Creating TFRecord files" section.
 TODO: add the steps and the scripts into the repo
 
@@ -99,3 +99,11 @@ root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/resea
 Get the ip inside the docker with command #ip address
 
 Run the code inside the ipython notebook. It will produce the predicted result.
+
+
+
+###############################
+
+
+Notes:
+The raw data and trained models are too large, it was put into aws s3 folder. To get those data, run get_data.sh
