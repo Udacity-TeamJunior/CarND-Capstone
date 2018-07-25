@@ -9,8 +9,8 @@ import yaml
 class TLClassifier(object):
     def __init__(self):
         #TODO load classifier
-        self.model_graph = None
-        self.session = None
+        self.model_graph = self.import_graph('light_classification/model_frozen_sim')
+        self.session = tf.Session(graph=self.model_graph)
         self.image_counter = 0
         self.classes = {1: TrafficLight.RED,
                         2: TrafficLight.YELLOW,
@@ -19,7 +19,6 @@ class TLClassifier(object):
 
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
-        self.load_model(self.get_model_path())
 
 
     def run_inference_for_single_image(self, image_np, min_score_thresh=0.5):
@@ -48,21 +47,18 @@ class TLClassifier(object):
 
         return None, None
 
-    def get_model_path(self):
-        return os.path.dirname(os.path.realpath(__file__)) + self.config['model_frozen_sim']
+    def import_graph(self,model_path):
+        detection_graph = tf.Graph()
 
-    def load_model(self, model_path):
-        config = tf.ConfigProto()
-        config.graph_options.optimizer_options.global_jit_level = tf.OptimizerOptions.ON_1
+        with detection_graph.as_default():
+          od_graph_def = tf.GraphDef()
 
-        self.model_graph = tf.Graph()
-        with tf.Session(graph=self.model_graph, config=config) as sess:
-            self.session = sess
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(model_path, 'rb') as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
-                tf.import_graph_def(od_graph_def, name='')
+          with tf.gfile.GFile(model_path, 'rb') as fid:
+            serialized_graph = fid.read()
+            od_graph_def.ParseFromString(serialized_graph)
+            tf.import_graph_def(od_graph_def, name='')
+
+        return detection_graph
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
