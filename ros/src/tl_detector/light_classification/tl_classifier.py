@@ -9,7 +9,7 @@ import yaml
 class TLClassifier(object):
     def __init__(self):
         #TODO load classifier
-        self.model_graph = self.import_graph('light_classification/model_frozen_sim')
+        self.model_graph = self.import_graph('light_classification/model_frozen_sim/frozen_inference_graph.pb')
         self.session = tf.Session(graph=self.model_graph)
         self.image_counter = 0
         self.classes = {1: TrafficLight.RED,
