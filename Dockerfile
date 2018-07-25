@@ -60,6 +60,7 @@ RUN apt-get install libjpeg8-dev
 RUN pip install Pillow
 
 RUN apt-get install -y wget
+RUN apt-get install -y vim
 
 RUN mkdir /capstone
 VOLUME ["/capstone"]
