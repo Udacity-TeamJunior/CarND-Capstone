@@ -1,4 +1,8 @@
-Steps:
+Steps
+
+ubuntu@ip-172-31-4-64:/data/capstone/code/CarND-Capstone$ docker build . -t capstone
+ubuntu@ip-172-31-4-64:/data/capstone/code/CarND-Capstone$ docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/   --rm -it capstone
+
 
 Get Data
 Get data from https://s3-us-west-2.amazonaws.com/udacitysdccapstonepublic/dataset-sdcnd-capstone.zip
@@ -33,21 +37,21 @@ Setup a Google Cloud Project
 # export YOUR_GCS_BUCKET=udacitycapstonejuniorbucket
 
 
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior# gsutil cp data/dataset-sdcnd-capstone/sim_data.record gs://${YOUR_GCS_BUCKET}/data/
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior# gsutil cp data/label_map.pbtxt gs://${YOUR_GCS_BUCKET}/data/label_map.pbtxt
+root@4d7d44e46c7d:/capstone/modeltrain# gsutil cp data/dataset-sdcnd-capstone/sim_data.record gs://${YOUR_GCS_BUCKET}/data/
+root@4d7d44e46c7d:/capstone/modeltrain# gsutil cp data/label_map.pbtxt gs://${YOUR_GCS_BUCKET}/data/label_map.pbtxt
 
 
 Downloading a COCO-pretrained Model for Transfer Learning
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior/data# wget http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior/data# tar -xvf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior/data# gsutil cp faster_rcnn_resnet101_coco_11_06_2017/model.ckpt.* gs://${YOUR_GCS_BUCKET}/data/
+root@4d7d44e46c7d:/capstone/modeltrain/data# wget http://storage.googleapis.com/download.tensorflow.org/models/object_detection/faster_rcnn_resnet101_coco_11_06_2017.tar.gz
+root@4d7d44e46c7d:/capstone/modeltrain/data# tar -xvf faster_rcnn_resnet101_coco_11_06_2017.tar.gz
+root@4d7d44e46c7d:/capstone/modeltrain/data# gsutil cp faster_rcnn_resnet101_coco_11_06_2017/model.ckpt.* gs://${YOUR_GCS_BUCKET}/data/
 
 
 Configuring the Object Detection Pipeline
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior/data# gsutil cp config/faster_rcnn_resnet101_udacitycapstonejunior.config gs://${YOUR_GCS_BUCKET}/data/faster_rcnn_resnet101_udacitycapstonejunior.config
+root@4d7d44e46c7d:/capstone/modeltrain/data# gsutil cp config/faster_rcnn_resnet101_udacitycapstonejunior.config gs://${YOUR_GCS_BUCKET}/data/faster_rcnn_resnet101_udacitycapstonejunior.config
 
 
-root@4d7d44e46c7d:/data/capstone/code/tl_train/TL_Train_Junior/data# cd /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/
+root@4d7d44e46c7d:/capstone/modeltrain/data# cd /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/
 root@4d7d44e46c7d:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# bash object_detection/dataset_tools/create_pycocotools_package.sh /tmp/pycocotools
 
 t@4d7d44e46c7d:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# python setup.py sdist
@@ -64,7 +68,6 @@ root@4d7d44e46c7d:/usr/local/lib/python2.7/dist-packages/tensorflow/models/resea
 
 
 # From tensorflow/models/research/
-
 
 root@4d7d44e46c7d:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# gcloud ml-engine jobs submit training `whoami`_object_detection_udacitycapstone_`date +%m_%d_%Y_%H_%M_%S` \
 >      --runtime-version 1.8 \
@@ -87,8 +90,8 @@ root@4d7d44e46c7d:/usr/local/lib/python2.7/dist-packages/tensorflow/models/resea
 Export Model from Google Cloud to Local:
 root@56d3f826d30b:/capstone/ros# export YOUR_GCS_BUCKET=udacitycapstonejuniorbucket
 root@56d3f826d30b:/capstone/ros# export CHECKPOINT_NUMBER=28564
-root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# gsutil cp gs://${YOUR_GCS_BUCKET}/model_dir/model.ckpt-${CHECKPOINT_NUMBER}.* /data--rm/capstone/code/tl_train/TL_Train_Junior/modeloutput/
-root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# python object_detection/export_inference_graph.py     --input_type image_tensor     --pipeline_config_path /data--rm/capstone/code/tl_train/TL_Train_Junior/data/config/faster_rcnn_resnet101_udacitycapstonejunior.config     --trained_checkpoint_prefix /data--rm/capstone/code/tl_train/TL_Train_Junior/modeloutput/model.ckpt-${CHECKPOINT_NUMBER}     --output_directory /data--rm/capstone/code/tl_train/TL_Train_Junior/modeloutput/exported_graphs
+root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# gsutil cp gs://${YOUR_GCS_BUCKET}/model_dir/model.ckpt-${CHECKPOINT_NUMBER}.* /capstone/modeltrain/modeloutput/
+root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research# python object_detection/export_inference_graph.py     --input_type image_tensor     --pipeline_config_path /capstone/modeltrain/data/config/faster_rcnn_resnet101_udacitycapstonejunior.config     --trained_checkpoint_prefix /capstone/modeltrain/modeloutput/model.ckpt-${CHECKPOINT_NUMBER}     --output_directory /capstone/modeltrain/modeloutput/exported_graphs
 
 
 Copy object_detection_tutorial_udacityjunior.ipynb to /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection/
