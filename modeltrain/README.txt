@@ -97,7 +97,7 @@ root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/resea
 Copy object_detection_tutorial_udacityjunior.ipynb to /usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection/
 
 Open Jupyter
-root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection# /usr/bin/env python /root/.local/bin/jupyter-notebook --allow-root --ip 0.0.0.0 --no-browser ./object_detection_tutorial.ipynb
+root@56d3f826d30b:/usr/local/lib/python2.7/dist-packages/tensorflow/models/research/object_detection# /usr/bin/env python /root/.local/bin/jupyter-notebook --allow-root --ip 0.0.0.0 --no-browser ./object_detection_tutorial_udacityjunior.ipynb
 
 Get the ip inside the docker with command #ip address
 
