@@ -38,6 +38,7 @@ class TLDetector(object):
         sub3 = rospy.Subscriber('/vehicle/traffic_lights', TrafficLightArray, self.traffic_cb)
         sub6 = rospy.Subscriber('/image_color', Image, self.image_cb)
 
+
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
 
@@ -66,6 +67,20 @@ class TLDetector(object):
     def traffic_cb(self, msg):
         self.lights = msg.lights
 
+    # def process_traffic_lights_real_test(self):
+        """Finds closest visible traffic light, if one exists, and determines its
+            location and color
+
+        Returns:
+            int: index of waypoint closes to the upcoming stop line for a traffic light (-1 if none exists)
+            int: ID of traffic light color (specified in styx_msgs/TrafficLight)
+
+        """
+        # cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
+
+        # Get classification
+        # predicted = self.light_classifier.get_classification(cv_image)
+
     def image_cb(self, msg):
         """Identifies red lights in the incoming camera image and publishes the index
             of the waypoint closest to the red light's stop line to /traffic_waypoint
@@ -74,9 +89,12 @@ class TLDetector(object):
             msg (Image): image from car-mounted camera
 
         """
+
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
+#        self.process_traffic_lights_real_test()
+#       	return 
 
         '''
         Publish upcoming red lights at camera frequency.
@@ -143,7 +161,7 @@ class TLDetector(object):
         # Get classification
         predicted = self.light_classifier.get_classification(cv_image)
 
-        rospy.logdebug("traffic light state: %d", light.state)
+        #rospy.logdebug("traffic light state: %d", light.state)
 
         #return light.state
         return predicted

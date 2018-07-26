@@ -48,13 +48,10 @@ class TLClassifier(object):
         classes = np.squeeze(classes)
         boxes = np.squeeze(boxes)
 
-
-        #rospy.loginfo("boxes : %d=============================================================", len(boxes))
-
         for i, box in enumerate(boxes):
             if scores[i] > min_score_thresh:
                 light_class = self.classes[classes[i]]
-                rospy.loginfo("Traffic Light Class detected: %d", light_class)
+        #        rospy.loginfo("Traffic Light Class detected: %d", light_class)
                 return light_class, scores[i]
 
         return None, None
@@ -80,10 +77,7 @@ class TLClassifier(object):
         Returns:
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
         """
-        #TODO implement light color prediction
-        
         class_index, probability = self.run_inference_for_single_image(image)
-        #rospy.loginfo(str(class_index)+'======='+str(probability))
 
         if class_index is not None:
             rospy.loginfo("class: %d, probability: %f", class_index, probability)
