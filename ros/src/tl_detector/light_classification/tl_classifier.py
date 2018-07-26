@@ -23,7 +23,11 @@ class TLClassifier(object):
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
 
-
+    def process_image(self, image):
+        image = cv2.resize(image, (MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        return image
+        
     def run_inference_for_single_image(self, image_np, min_score_thresh=0.5):
         image_tensor = self.model_graph.get_tensor_by_name('image_tensor:0')
         detection_boxes = self.model_graph.get_tensor_by_name('detection_boxes:0')
