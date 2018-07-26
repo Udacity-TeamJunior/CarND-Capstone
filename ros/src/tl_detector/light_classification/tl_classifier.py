@@ -6,10 +6,13 @@ import cv2
 import rospy
 import yaml
 
+#model_type='frcnn'
+model_type='ssd'
+
 class TLClassifier(object):
     def __init__(self):
         #TODO load classifier
-        self.model_graph = self.import_graph('light_classification/model_frozen_sim/frozen_inference_graph.pb')
+        self.model_graph = self.import_graph('light_classification/model_frozen_sim/'+model_type+'/frozen_inference_graph.pb')
         self.session = tf.Session(graph=self.model_graph)
         self.image_counter = 0
         self.classes = {1: TrafficLight.RED,
