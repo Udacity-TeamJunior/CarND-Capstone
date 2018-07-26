@@ -6,22 +6,27 @@ import cv2
 import rospy
 import yaml
 
+MAX_IMAGE_WIDTH = 300
+MAX_IMAGE_HEIGHT = 225
+
 #model_type='frcnn'
 model_type='ssd'
 
 class TLClassifier(object):
+
     def __init__(self):
         #TODO load classifier
-        self.model_graph = self.import_graph('light_classification/model_frozen_sim/'+model_type+'/frozen_inference_graph.pb')
-        self.session = tf.Session(graph=self.model_graph)
-        self.image_counter = 0
-        self.classes = {1: TrafficLight.RED,
-                        2: TrafficLight.YELLOW,
-                        3: TrafficLight.GREEN,
-                        4: TrafficLight.UNKNOWN}
-
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
+        rospy.loginfo(self.config['detect_model']+model_type+'/frozen_inference_graph.pb')
+        self.model_graph = self.import_graph(self.config['detect_model']+model_type+'/frozen_inference_graph.pb')
+        self.session = tf.Session(graph=self.model_graph)
+
+        self.classes = {1: TrafficLight.GREEN,
+                        2: TrafficLight.RED,
+                        3: TrafficLight.YELLOW, 
+                        4: TrafficLight.UNKNOWN}
+
 
     def process_image(self, image):
         image = cv2.resize(image, (MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT))
@@ -43,16 +48,17 @@ class TLClassifier(object):
         classes = np.squeeze(classes)
         boxes = np.squeeze(boxes)
 
+
+        #rospy.loginfo("boxes : %d=============================================================", len(boxes))
+
         for i, box in enumerate(boxes):
             if scores[i] > min_score_thresh:
                 light_class = self.classes[classes[i]]
-                self.save_image(image_np, light_class)
-                rospy.logdebug("Traffic Light Class detected: %d", light_class)
+                rospy.loginfo("Traffic Light Class detected: %d", light_class)
                 return light_class, scores[i]
-            else:
-                self.save_image(image_np, TrafficLight.UNKNOWN)
 
         return None, None
+
 
     def import_graph(self,model_path):
         detection_graph = tf.Graph()
@@ -69,19 +75,17 @@ class TLClassifier(object):
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
-
         Args:
             image (cv::Mat): image containing the traffic light
-
         Returns:
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
-
         """
         #TODO implement light color prediction
         
         class_index, probability = self.run_inference_for_single_image(image)
+        #rospy.loginfo(str(class_index)+'======='+str(probability))
 
         if class_index is not None:
-            rospy.logdebug("class: %d, probability: %f", class_index, probability)
+            rospy.loginfo("class: %d, probability: %f", class_index, probability)
 
         return class_index
