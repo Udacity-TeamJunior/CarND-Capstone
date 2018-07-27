@@ -7,7 +7,7 @@
 
 **Team Members:**
 	
-- Qianliang Wu(Team Lead) (wuqianliang@ismartearth.com)
+- Qianliang Wu (Team Lead) (wuqianliang@ismartearth.com)
 - Qinyuan Yin (qinyuany@mtu.edu)
 - Shengyao Xu (shengyao@umich.edu)
 - Yafei Qin (qin_yafei90@163.com)
