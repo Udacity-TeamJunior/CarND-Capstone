@@ -2,8 +2,7 @@
 * * *
 
 ## Final Project - System Integration
-![image alt text](documentationImages/carla.jpg)
-
+* * *
 **Team Name:** TeamJunior
 **Team Members:**
 	
