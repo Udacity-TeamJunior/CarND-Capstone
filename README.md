@@ -11,7 +11,7 @@
 - Qinyuan Yin (qinyuany@mtu.edu)
 - Shengyao Xu (shengyao@umich.edu)
 - Yafei Qin (qin_yafei90@163.com)
-- Xinsong Li (vatsalbits@gmail.com)
+- Xinsong Li (lixinso@gmail.com)
 
 
 ## Traffic Light Detection Project
