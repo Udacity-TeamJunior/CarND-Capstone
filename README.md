@@ -3,7 +3,8 @@
 
 ## Final Project - System Integration
 
-**Team Name:** TeamJunior
+**Team Name:**  ####TeamJunior
+
 **Team Members:**
 	
 - Qianliang Wu (wuqianliang@ismartearth.com)
