@@ -2,7 +2,7 @@
 * * *
 
 ## Final Project - System Integration
-* * *
+* * 
 **Team Name:** TeamJunior
 **Team Members:**
 	
